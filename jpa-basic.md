@@ -10,5 +10,8 @@ JPA 설정 - persistence.xml
  - JPA는 특정 데이터베이스에 종속 X
  - hibernate.dialect 속성에 지정(하이버네이트는 40가지 이상의 데이터베이스 방언 지원)
  
+ Persistence가 META-INF/persistence.xml의 설정 정보를 조회하여 EntityManagerFactory를 생성 공장에서 EntityManager들을 생성
+ 
+ 
  
  
