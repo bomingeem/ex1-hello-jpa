@@ -14,6 +14,13 @@ public class Member {
     //@Column(name = "username") -> DB테이블의 컬렁명이 username일 경우 이름 지정
     private  String name;
 
+    public Member(){
+    }
+    public Member(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     //Alt + Insert = getter/setter 자동생성 단축키
     public Long getId() {
         return id;

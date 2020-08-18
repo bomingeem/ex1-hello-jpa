@@ -10,14 +10,15 @@ JPA 설정 - persistence.xml
  - JPA는 특정 데이터베이스에 종속 X
  - hibernate.dialect 속성에 지정(하이버네이트는 40가지 이상의 데이터베이스 방언 지원)
  
-Persistence가 META-INF/persistence.xml의 설정 정보를 조회하여 EntityManagerFactory를 생성 공장에서 EntityManager들을 생성
+Persistence가 META-INF/persistence.xml의 설정 정보를 조회하여 EntityManagerFactory를 생성 
+EntityManagerFactory라는 공장에서 EntityManager(들)을 생성
 
 객체와 테이블을 생성하고 매핑하기
 @Entity : JPA가 관리할 객체
 @Id : 데이터베이스 PK와 매핑
 
- · 엔티티 매니저 팩토리는 하나만 생성해서 애플리케이션 전체에서 공유
- · 엔티티 매니저는 쓰레드간에 공유 X (사용하고 버려야 함)
+ · EntityManagerFactory는 하나만 생성해서 애플리케이션 전체에서 공유
+ · EntityManager는 쓰레드간에 공유 X (사용하고 버려야 함)
  · JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
 
 JPQL
@@ -32,6 +33,7 @@ JPQL
  · SQL은 데이터베이스 테이블을 대상으로 쿼리 
  · 테이블이 아닌 객체를 대상으로 검색하는 객체 지향 쿼리
  · SQL을 추상화해서 특정 데이터베이스 SQL에 의존 X
+ 
   
  
 
