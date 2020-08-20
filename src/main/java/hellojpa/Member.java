@@ -6,13 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-//@Table(name = "USER") -> DB테이블의 이름이 USER일 경우 이름 지정
+//@Table(name = "MBR") // -> DB테이블의 이름이 MBR일 경우 이름 지정
 public class Member {
     //최소한 JPA에게 PK를 알려주어야 함
     @Id
     private Long id;
     //@Column(name = "username") -> DB테이블의 컬렁명이 username일 경우 이름 지정
-    private  String name;
+    private String name;
+    private int gogo;
 
     public Member(){
     }
