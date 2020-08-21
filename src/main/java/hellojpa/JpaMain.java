@@ -15,14 +15,22 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Member member = em.find(Member.class, 150L);
-            member.setName("AAAAA");
+            Member member1 = new Member();
+            member1.setUsername("A");
+            Member member2 = new Member();
+            member2.setUsername("B");
+            Member member3 = new Member();
+            member3.setUsername("C");
 
-            em.clear();
+            em.persist(member1); //1, 51
+            em.persist(member2); //MBM
+            em.persist(member3); //MBM
 
-            Member member2 = em.find(Member.class, 150L);
-            System.out.println("=========================");
-            
+            System.out.println("member1 = " + member1.getId());
+            System.out.println("member2 = " + member2.getId());
+            System.out.println("member3 = " + member3.getId());
+
+
             /*
             //동일성 보장
             Member findMember1 = em.find(Member.class, 101L);

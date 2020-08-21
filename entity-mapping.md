@@ -32,4 +32,45 @@ DDL 생성기능
 · 제약조건 추가 : 회원 이름은 필수, 10자 초과 X
 · @Column(nullable = false, length = 10)
 · DDL 생성기능은 DDL을 자동 생성할 때만 사용되고 JPA의 실행 로직에는 영향을 주지 않는다
+
+@Column : 컬럼 매핑
+@Temporal : 날짜 타입 매핑
+@Enumerated : enum 타입 매핑
+@Lob : BLOB, CLOB 매핑
+@Transient : 특정 필드를 컬럼에서 제외
+
+@Column
+name - 필드와 매핑할 테이블의 컬럼 이름
+insertable, updatable - 등록, 변경 가능 여부
+nullable - null 값의 허용 여부를 설정, false로 설정하면 DDL생성 시 not null 제약조건이 붙는다
+unique - 한 컬럼에 간단히 유니크 제약조건을 걸 때 사용한다
+columnDefinition - 데이터베이스 컬럼 정보를 직접 줄 수 있다
+length - 문자 길이 제약조건
+enum 타입을 매핑할 때 EnumType.ORDINAL 사용 X → enum 순서를 데이터베이스에 저장
+
+기본 키 매핑 어노테이션
+· @Id : 직접 할당
+· @GeneratedValue : 자동 생성 
+
+IDENTITY 전략
+· 기본 키 생성을데이터베이스에 위임, 주로 MySQL, PostgreSQL..
+  (예 : MySQL의 AUTO_INCREMENT)
+· AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID값을 알 수 있음
+SEQUENCE 전략
+allocationSize
+TABLE 전략
+· 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내내는 전략
+· 장점 : 모든 DB에서 적용가능, 단점 : 성능
+
+권장하는 식별자 전략
+· 기본 키 제약 조건 ; null 아님 유일, 변하면 안됨
+· 미래까지 이 조건을 만족하는 자연키는 찾기 어려우니 대리키(대체키)를 사용하자
+· 권장 : Long형 + 대체키 + 키 생성전략 사용
+
+도메인 모델 분석
+· 회원과 주문의 관계 : 회원은 여러번 주문 가능 (일대다)
+· 주문과 상품의 관계 : 주문할 때 여러상품 선택, 반대로 같은 상품도 여러번 주문
+                    주문상품이라는 모델을 만들어 다대다 관계를 일대다, 다대일 관계로 풀어냄
+
+
 ``
