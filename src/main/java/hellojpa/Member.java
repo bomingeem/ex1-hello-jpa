@@ -13,10 +13,8 @@ import java.util.Date;
 //@Table(name = "MBR") // -> DB테이블의 이름이 MBR일 경우 이름 지정
 public class Member {
     //최소한 JPA에게 PK를 알려주어야 함
-    @Id
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator = "MEMBER_SEQ_GENERATOR")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
 
     @Column(name = "name", nullable = false) //DB테이블의 컬렁명이 username일 경우 이름 지정
@@ -26,7 +24,7 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
@@ -36,6 +34,7 @@ public class Member {
     @Lob
     private String description;
 
+    //Java 8에서 제공하는 LocalDate/LocalDateTime 이후로 Temporal를 사용하지 않아도 됨
     private LocalDate testLocalDate;
     private LocalDateTime testLocalDateTime;
 
