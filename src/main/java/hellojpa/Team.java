@@ -1,19 +1,33 @@
 package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Team {
-
     @Id @GeneratedValue
     @Column(name = "TEAM_ID")
-    private Long teamId;
-
-    @Column(name = "USERNAME")
+    private Long id;
     private String name;
+
+    //1:다 매핑에서 team으로 매핑이 되어있다
+    @OneToMany(mappedBy = "team")
+    private List<Member> members = new ArrayList<>();
+
+
+    public void addMember(Member member){
+        member.setTeam(this);
+        members.add(member);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -23,11 +37,21 @@ public class Team {
         this.name = name;
     }
 
-    public Long getTeamId() {
-        return teamId;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", members=" + members +
+                '}';
     }
 }
+

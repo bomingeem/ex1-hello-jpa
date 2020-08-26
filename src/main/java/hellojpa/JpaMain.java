@@ -22,16 +22,22 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+            member.changeTeam(team); //**
             em.persist(member);
 
-            em.flush();
-            em.clear();
+            //team.getMembers().add(member); //**
 
-            Member findMember = em.find(Member.class, member.getId());
+            //em.flush();
+            //em.clear();
 
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+
+            System.out.println("====================");
+            System.out.println("findTeam = " + findTeam);
+            System.out.println("====================");
+
+
             /*
             //동일성 보장
             Member findMember1 = em.find(Member.class, 101L);
