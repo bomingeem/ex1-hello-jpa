@@ -15,15 +15,20 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Member member = new Member();
-            member.setUsername("member1");
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbbb");
+            movie.setName("바람과함께사라지다");
+            movie.setPrice(10000);
 
-            em.persist(member);
+            em.persist(movie);
 
-            Team team = new Team();
-            team.setName("teamA");
+            em.flush();
+            em.clear();
 
-            em.persist(team);
+            Item item = em.find(Item.class, movie.getId());
+            System.out.println("item = " + item);
+
 
             /*
             //동일성 보장
