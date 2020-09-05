@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -15,14 +16,35 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-
             Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            member.setWorkPeriod(new Period());
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "10000"));
+
+            member.getFavoriteFood().add("치킨");
+            member.getFavoriteFood().add("족발");
+            member.getFavoriteFood().add("피자");
+
+            member.getAddressHistory().add(new AddressEntity("old1", "street", "10000"));
+            member.getAddressHistory().add(new AddressEntity("old2", "street", "10000"));
 
             em.persist(member);
 
+            em.flush();
+            em.clear();
+            System.out.println("=============== START ===============");
+            Member findMember = em.find(Member.class, member.getId());
+            Address old = findMember.getHomeAddress();
+
+            //homeCity -> newCity
+            //findMember.setHomeAddress(new Address("newCity", old.getStreet(), old.getZipcode()));
+
+            //치킨 -> 한식
+            //findMember.getFavoriteFood().remove("치킨");
+            //findMember.getFavoriteFood().add("한식");
+
+            //ol1 -> new1
+            findMember.getAddressHistory().remove(new AddressEntity("old1", "street", "10000"));
+            findMember.getAddressHistory().add(new AddressEntity("newCity1", "street", "10000"));
 
             /*
             //동일성 보장
