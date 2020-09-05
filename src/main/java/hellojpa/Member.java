@@ -15,7 +15,7 @@ import java.util.concurrent.locks.Lock;
         sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
         initialValue = 1, allocationSize = 50)
  */
-public class Member extends BaseEntity {
+public class Member {
     //최소한 JPA에게 PK를 알려주어야 함
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
     //@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
@@ -25,6 +25,23 @@ public class Member extends BaseEntity {
     @Column(name = "USERNAME")
      private String username;
 
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
+    
+    //주소
+    @Embedded
+    private Address homeAddress;
+
+    //주소
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "city", column = @Column(name = "WORK_CITY")),
+                         @AttributeOverride(name = "street", column = @Column(name = "WORK_STREET")),
+                         @AttributeOverride(name = "zipcode", column = @Column(name = "WORK_ZIPCODE"))
+    })
+    private Address workAddress;
+
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Team team;
@@ -35,7 +52,7 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
-
+    */
     //@Column(name = "TEAM_ID")
     //private Long teamId;
 
@@ -75,27 +92,19 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
 
-    public Locker getLocker() {
-        return locker;
+    public Address getHomeAddress() {
+        return homeAddress;
     }
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
-
-    public List<MemberProduct> getMemberProducts() {
-        return memberProducts;
-    }
-
-    public void setMemberProducts(List<MemberProduct> memberProducts) {
-        this.memberProducts = memberProducts;
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
