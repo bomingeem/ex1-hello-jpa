@@ -1,5 +1,3 @@
-#ex1-hello-jpa
-
 JPA 설정 - persistence.xml
  · META-INF/persistence.xml 위치
  · persistence-unit name으로 이름 지정
@@ -17,6 +15,7 @@ EntityManagerFactory라는 공장에서 EntityManager(들)을 생성
 @Entity : JPA가 관리할 객체
 @Id : 데이터베이스 PK와 매핑
 
+주의
  · EntityManagerFactory는 하나만 생성해서 애플리케이션 전체에서 공유
  · EntityManager는 쓰레드간에 공유 X (사용하고 버려야 함)
  · JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
