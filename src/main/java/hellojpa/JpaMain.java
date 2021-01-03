@@ -20,14 +20,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member findMember = em.find(Member.class, 1L);
-            //멤버 객체를 대상으로 select
-            List<Member> result = em.createQuery("select m from Member m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+            Member member1 = em.find(Member.class, 150L);
+            member1.setName("AAAAA");
 
-            result.forEach(member -> member.getName());
+            //em.detach(member);
+            em.clear();
+
+            Member member2 = em.find(Member.class, 150L);
+
+            System.out.println("==============================");
 
             tx.commit();
         } catch (Exception e) {
