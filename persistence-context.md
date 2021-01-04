@@ -1,4 +1,7 @@
-#ex1-hello-jpa
+JPA에서 가장 중요한 2가지
+ · 객체와 관계형 데이터베이스 매핑하기(Object Relational Mapping)
+ · 영속성 컨텍스트
+
 영속성 컨텍스트
  · 엔티티를 영구 저장하는 환경
  · EntityManager.persist(entity);

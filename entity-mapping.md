@@ -1,4 +1,3 @@
-#ex1-hello-jpa
 · 객체와 테이블 매핑 : @Entity, @Table
 · 필드와 컬럼 매핑 : @Column
 · 기본 키 매핑 : @Id
@@ -10,6 +9,8 @@
 
 @Table
 · @Table은 엔티티와 매핑할 테이블 지정
+ex) @Table(name="MBR")
+    name : 매핑할 테이블 이름
 
 데이터베이스 스키마 자동 생성
 · DDL을 애플리케이션 실행 시점에 자동 생성
@@ -24,6 +25,7 @@ update : 변경분만 반영(운영DB에서는 사용 X)
 validate : 엔티티와 테이블이 정상 매핑되었는지만 확인
 none : 사용하지 않음
 
+운영 장비에는 절대 create, create-drop, update 사용하면 안됨
 개발 초기에는 create 또는 update
 테스트 서버에는 update 또는 validate
 스테이징과 운영 서버에는 validate 또는 none
