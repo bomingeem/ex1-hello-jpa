@@ -54,18 +54,24 @@ enum 타입을 매핑할 때 EnumType.ORDINAL 사용 X → enum 순서를 데이
 · @Id : 직접 할당
 · @GeneratedValue : 자동 생성 
 
-IDENTITY 전략
-· 기본 키 생성을 데이터베이스에 위임, 주로 MySQL, PostgreSQL..
+기본 키 매핑 방법
+IDENTITY
+ · 기본 키 생성을 데이터베이스에 위임, 주로 MySQL, PostgreSQL..
   (예 : MySQL의 AUTO_INCREMENT)
-· AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID값을 알 수 있음
-SEQUENCE 전략
-allocationSize
-TABLE 전략
+ · AUTO_INCREMENT는 데이터베이스에 INSERT SQL을 실행한 이후에 ID값을 알 수 있음 
+ · IDENTITY 전략은 em.persist() 시점에 즉시 INSERT SQL 실행하고 DB에서 식별자를 조회
+SEQUENCE
+ · 데이터베이스 시퀀스 오브젝트 적용, ORACLE
+ · @SequenceGenerator 필요
+ · 주의 : allocationSize 기본값 = 50
+TABLE
 · 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내내는 전략
 · 장점 : 모든 DB에서 적용가능, 단점 : 성능
+AUTO
+ · 방언에 따라 자동 지정, 기본값
 
 권장하는 식별자 전략
-· 기본 키 제약 조건 : null 아님 유일, 변하면 안됨
+· 기본 키 제약 조건 : null 아님, 유일, 변하면 안됨
 · 미래까지 이 조건을 만족하는 자연키는 찾기 어려우니 대리키(대체키)를 사용하자
-  ex) 주민등록번호는 기본키로 사용하기에 적합하지 않음
+  예를 들어 주민등록번호는 기본키로 사용하기에 적합하지 않음
 · 권장 : Long형 + 대체키 + 키 생성전략 사용

@@ -1,17 +1,23 @@
-package hellojpa;
+package hellojpa.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorColumn
-public abstract class Item {
+public class Item {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
+    @Column(name = "ITEM_ID")
     private Long id;
 
     private String name;
+
     private int price;
+
+    private int stockQuantity;
 
     public Long getId() {
         return id;
@@ -35,5 +41,13 @@ public abstract class Item {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 }
