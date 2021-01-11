@@ -1,5 +1,7 @@
 package hellojpa;
 
+import hellojpa.domain.Member;
+import hellojpa.domain.Team;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -20,6 +22,21 @@ public class JpaMain {
         tx.begin();
 
         try {
+            //저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            //member.changeTeam(team); //**
+            em.persist(member);
+
+            team.addMember(member);
+
+            em.flush();
+            em.clear();
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
