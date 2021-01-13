@@ -1,4 +1,4 @@
-package hellojpa.domain;
+package hellojpa.domain.jpashop;
 
 import javax.persistence.*;
 
@@ -16,7 +16,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
-    private Item item;
+    private Items items;
 
     private int orderPrice;
 
@@ -38,12 +38,12 @@ public class OrderItem {
         this.order = order;
     }
 
-    public Item getItem() {
-        return item;
+    public Items getItem() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItem(Items items) {
+        this.items = items;
     }
 
     public int getOrderPrice() {

@@ -1,4 +1,4 @@
-package hellojpa.domain;
+package hellojpa.domain.jpashop;
 
 public enum OrderStatus {
     ORDER,

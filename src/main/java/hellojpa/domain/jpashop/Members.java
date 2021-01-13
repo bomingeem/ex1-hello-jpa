@@ -1,4 +1,4 @@
-package hellojpa.domain;
+package hellojpa.domain.jpashop;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
