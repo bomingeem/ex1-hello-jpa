@@ -46,13 +46,13 @@ public class JpaMain {
              *
              * 플러시는 영속성 컨텍스트를 비우지 않으며 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.
              */
-            Member member = em.find(Member.class, 150L);
-            member.setName("김민보");
+            Member member = new Member();
+            member.setId(3L);
+            member.setUsername("C");
+            member.setRoleType(RoleType.GUEST);
+            em.persist(member);
 
-            //em.detach(member);
-            em.clear();
-
-            //커밋하는 순간 데이터베이스에 SQL 을 보낸다.
+            //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
