@@ -46,24 +46,19 @@ public class JpaMain {
              *
              * 플러시는 영속성 컨텍스트를 비우지 않으며 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.
              */
-            Member member1 = new Member();
-            member1.setUsername("A");
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            Member member2 = new Member();
-            member2.setUsername("B");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
 
-            Member member3 = new Member();
-            member3.setUsername("C");
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
 
-            System.out.println("====================");
-            em.persist(member1); //1, 51
-            em.persist(member2); //MEMORY
-            em.persist(member3); //MEMORY
-
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-            System.out.println("====================");
+            System.out.println("findTeam = " + findTeam.getName());
 
             //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
