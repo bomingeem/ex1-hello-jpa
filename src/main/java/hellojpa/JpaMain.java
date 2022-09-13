@@ -57,8 +57,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println("findMovie = " + findMovie);
+            Item item = em.find(Item.class, movie.getId());
+            System.out.println("item = " + item);
 
             //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
