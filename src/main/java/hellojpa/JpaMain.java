@@ -1,7 +1,7 @@
 package hellojpa;
 
-import org.hibernate.Hibernate;
 import javax.persistence.*;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -44,17 +44,32 @@ public class JpaMain {
              *
              * 플러시는 영속성 컨텍스트를 비우지 않으며 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.
              */
+            Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
+
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
+
             Member member1 = new Member();
             member1.setUsername("member1");
+            member1.setTeam(teamA);
             em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setTeam(teamB);
+            em.persist(member2);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member1.getId());
-            System.out.println("refMember = " + refMember.getClass());
-            Hibernate.initialize(refMember); //강제 초기화
-            // System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+            // Member m = em.find(Member.class, member1.getId());
+            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class).getResultList();
+
+            //SQL: SELECT * FROM MEMBER
+            //SQL: SELECT * FROM TEAM WHERE TEAM_ID = xxx
 
             //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
