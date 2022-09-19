@@ -44,11 +44,15 @@ public class JpaMain {
              *
              * 플러시는 영속성 컨텍스트를 비우지 않으며 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.
              */
+            Address address = new Address("city", "street", "10000");
+
             Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            member.setWorkPeriod(new Period());
+            member.setUsername("member1");
+            member.setHomeAddress(address);
             em.persist(member);
+
+            Address newAddress = new Address("newCity", address.getStreet(), address.getZipcode());
+            member.setHomeAddress(newAddress);
 
             //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
