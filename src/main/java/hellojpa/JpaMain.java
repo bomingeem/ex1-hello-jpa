@@ -1,6 +1,10 @@
 package hellojpa;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -44,35 +48,32 @@ public class JpaMain {
              * 플러시는 영속성 컨텍스트를 비우지 않으며 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화 한다.
              */
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity", "street", "10000"));
+            /**
+             * JPQL
+             */
+            String queryString = "select m from Member m where m.username like '%김%'";
+            List<Member> result = em.createQuery(queryString, Member.class)
+                    .getResultList();
 
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
+            for (Member member : result) {
+                System.out.println("member = " + member);
+            }
 
-            member.getAddressHistory().add(new AddressEntity("old1", "street", "10000"));
-            member.getAddressHistory().add(new AddressEntity("old2", "street", "10000"));
+            /**
+             * CriteriaQuery
+             */
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Root<Member> m = query.from(Member.class);
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(cq).getResultList();
 
-            em.persist(member);
-
-            em.flush();
-            em.clear();
-
-            System.out.println("====================== START ======================");
-            Member findMember = em.find(Member.class, member.getId());
-
-
-            Address a = findMember.getHomeAddress();
-            // findMember.getHomeAddress().setCity("newCity");
-            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
-
-//            findMember.getFavoriteFoods().remove("치킨");
-//            findMember.getFavoriteFoods().add("한식");
-
-//            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
-//            findMember.getAddressHistory().add(new Address("newCity1", "street", "10000"));
+            /**
+             * NativeQuery
+             * flush -> commit, query
+             */
+            em.createNativeQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMBER", Member.class)
+                    .getResultList();
 
             //커밋하는 순간 데이터베이에 SQL 을 보낸다.
             tx.commit();
